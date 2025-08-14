@@ -18,7 +18,8 @@ async def read_root(request: Request):
     "method": request.method,
     "path": request.url.path,
     "query_params": dict(request.query_params),
-    "message": f"Hello from {container_id}!"
+    "message": f"Hello from {container_id}!",
+    "name": "eunbyul2"
   }
 
 @app.get("/health")
