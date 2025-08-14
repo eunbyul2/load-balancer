@@ -2,27 +2,27 @@ name: 빌드 및 배포
 
 on:
   push:
-    branches:  [ main ]
+    branches: [ main ]
 
 jobs:
   build-docker-image:
     runs-on: ubuntu-latest
     steps:
       - name: 원격저장소에서 소스를 복사
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: 소스파일을 docker이미지로 빌드한다
-        runs: docker build -t eunbyul2/my-fastapi-shoami:latest .
+        run: docker build -t eunbyul2/my-fastapi-whoami:latest .
 
       - name: docker hub에 로그인을 한다
-        run: docker login -u eunbyul2 -p ${{ secrets.DOCKER_PASSWORD }} 
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u eunbyul2 --password-stdin
 
       - name: 생성된 이미지를 docker hub에 push한다
         run: docker push eunbyul2/my-fastapi-whoami:latest
   
   deploy:
     needs: build-docker-image 
-    name: deploy
     runs-on: ubuntu-latest
     steps:
-      - run: echo '이미지 배포 및 실행'
+      - name: 이미지 배포 및 실행
+        run: echo '이미지 배포 및 실행'
